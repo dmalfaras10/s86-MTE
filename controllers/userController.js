@@ -69,3 +69,29 @@ module.exports.loginUser = (req, res) => {
         .catch(error => errorHandler(error, req, res));
     }
 };
+
+module.exports.getProfile = (req, res) => {
+    if (!req.user || !req.user.id) {
+        return res.status(401).send({
+            success: false,
+            message: "Authentication required. Please log in."
+        });
+    } else {
+        return User.findById(req.user.id)
+        .select("-password")
+        .then(user => {
+            if (user == null) {
+                return res.status(404).send({
+                    success: false,
+                    message: "User profile not found."
+                });
+            } else {
+                return res.status(200).send({
+                    success: true,
+                    user
+                });
+            }
+        })
+        .catch(error => errorHandler(error, req, res));
+    }
+};
