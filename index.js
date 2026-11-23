@@ -2,7 +2,7 @@ const express = require("express");
 const mongoose = require("mongoose");
 const userRoutes = require('./routes/userRoutes');
 const moviesRoutes = require('./routes/moviesRoutes');
-
+const cors = require("cors");
 const app = express();
 const port = 4000;
 
@@ -15,7 +15,7 @@ app.use(express.json());
 app.use(express.urlencoded({extended: true}));
 app.use("/users", userRoutes);
 app.use("/movies", moviesRoutes);
-
+app.use(cors());
 
 if(require.main === module){
 	app.listen(port, () => {
