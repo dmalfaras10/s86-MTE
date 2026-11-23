@@ -11,11 +11,11 @@ let db = mongoose.connection;
 db.on("error", console.error.bind(console, "Connection Error!"));
 db.once("open", () => console.log("We're connected to the cloud database!"));
 
+app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({extended: true}));
 app.use("/users", userRoutes);
 app.use("/movies", moviesRoutes);
-app.use(cors());
 
 if(require.main === module){
 	app.listen(port, () => {
